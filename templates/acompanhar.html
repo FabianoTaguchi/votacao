@@ -1,0 +1,26 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="container mt-5">
+    <h1>Acompanhamento de Votos por Categoria</h1>
+
+    {% for categoria, dados in resultados.items() %}
+    <div class="category-card">
+        <h2 class="text-capitalize">{{ categoria }}</h2>
+        <p style="font-size: 18px;">Total de votos na categoria: <strong><span style="font-size: 24px; color:red">{{ dados.total_votos }}</span></strong></p>
+    </div>
+    {% endfor %}
+    
+    <div class="alert alert-info">
+        <p style="font-size: 24px;">Total de votos no sistema: <strong>{{ total_votos }}</strong></p>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setInterval(function(){
+                location.reload();
+            }, 2500);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "template.html" %}
+{% block conteudo %}
+        
+<h1 class="text-center my-4">Faça seu login</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" action="{{ url_for('autenticar') }}">
+                <input type="hidden" name="proxima" value="{{ proxima or url_for('index') }}">
+                {{ form.csrf_token() }}
+                <div class="form-group mb-3">
+                    {{ form.login.label(class="form-label") }}
+                    {{ form.login(class="form-control") }}
+                </div>
+                <div class="form-group mb-3">
+                    {{ form.senha.label(class="form-label") }}
+                    {{ form.senha(class="form-control") }}
+                </div>
+                <div class="form-group mb-3 text-center">
+                    {{ form.logar(class="btn btn-primary me-2") }}
+                    <a class="btn btn-danger" href="{{ url_for('candidatos') }}">Voltar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

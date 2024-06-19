@@ -1,0 +1,46 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<form action="{{ url_for('atualizar') }}" method="post" enctype="multipart/form-data" class="container mt-4">
+  <div class="row g-4">
+      <!-- Imagem e upload -->
+      <div class="col-md-4 text-center">
+          <figure class="img-thumbnail">
+              <img class="img-fluid rounded" src="{{ url_for('imagem', nomeArquivo=imagemAluno) }}" alt="Imagem do candidato">
+              <figcaption class="mt-2">
+                  <label class="fileContainer btn btn-outline-secondary">
+                      Mudar Foto
+                      <input type="file" name="arquivo" accept=".jpeg" class="form-control-file mt-1">
+                  </label>
+              </figcaption>
+          </figure>
+      </div>
+
+      <!-- Formulário -->
+      <div class="col-md-8">
+          <fieldset>
+              <input type="hidden" name="id" value="{{ candidato.id }}">
+              {{ form.csrf_token() }}
+              <div class="form-group mb-3">
+                  {{ form.nome.label(class="form-label") }}
+                  {{ form.nome(class="form-control") }}
+              </div>
+              <div class="form-group mb-3">
+                  {{ form.descricao.label(class="form-label") }}
+                  {{ form.descricao(class="form-control") }}
+              </div>
+              <div class="form-group mb-3">
+                  {{ form.tipoCandidato.label(class="form-label") }}
+                  {{ form.tipoCandidato(class="form-select") }}
+              </div>
+              <div class="form-group mb-3 text-end">
+                  {{ form.salvar(class="btn btn-primary me-2") }}
+                  <a class="btn btn-danger" href="{{ url_for('candidatos') }}">Voltar</a>
+              </div>
+          </fieldset>
+      </div>
+  </div>
+</form>
+{% endblock %}
+
+
+

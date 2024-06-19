@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Voto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            max-width: 600px; /* Define a largura máxima do card */
+            margin: 0 auto; /* Centraliza o card horizontalmente */
+            margin-top: 50px; /* Margem superior para espaçamento */
+        }
+        .card-img-top {
+            max-height: 400px; /* Altura máxima da imagem */
+            object-fit: cover; /* Mantém o preenchimento da imagem sem distorção */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-4 mb-4">Confirmar Voto</h1>
+        <div class="card">
+            {% if candidato.imagemCaminho %}
+                <img src="{{ candidato.imagemCaminho }}" class="card-img-top" alt="{{ candidato.nome }}">
+            {% else %}
+                <img src="{{ url_for('static', filename='default.png') }}" class="card-img-top" alt="Sem imagem">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ candidato.nome }}</h5>
+                <p class="card-text">{{ candidato.descricao }}</p>
+            </div>
+        </div>
+        <form id="confirmar-form" action="{{ url_for('registrarVoto') }}" method="POST">
+            {{ form.csrf_token }}
+            <button id="confirmar-btn" type="button" class="btn btn-success mt-3 btn-block">Confirmar Voto</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="btn btn-danger mt-3 btn-block">Cancelar</a>
+    </div>
+
+    <!-- Tag para o som -->
+    <audio id="confirmacao-audio" src="{{ url_for('static', filename='urna.mp3') }}" preload="auto"></audio>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('confirmar-btn').addEventListener('click', function() {
+            var audio = document.getElementById('confirmacao-audio');
+            var form = document.getElementById('confirmar-form');
+            
+            // Toca o som
+            audio.play();
+
+            // Submete o formulário após o som terminar
+            audio.onended = function() {
+                form.submit();
+            };
+        });
+    </script>
+</body>
+</html>

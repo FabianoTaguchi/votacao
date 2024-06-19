@@ -1,0 +1,71 @@
+{% extends "template.html" %}
+{% block conteudo %}
+
+<div class="container mt-5 text-center">
+    <h2>Relatório Final de Contagem de Votos - Conselho Diretor </h2>
+    <h3>Escola Técnica Estadual de Rondonópolis - MT</h3>
+
+    {% for categoria, dados in resultados.items() %}
+    <div class="card my-3">
+        <div class="card-header">
+            <h2>{{ categoria|capitalize }}</h2>
+        </div>
+        <div class="card-body">
+            <p>Total de votos na categoria: <strong>{{ dados.total_votos }}</strong></p>
+            {% if dados.candidatoEleito %}
+            <p>Candidato eleito: <strong>{{ dados.candidatoEleito.nome }}</strong></p>
+            {% endif %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Votos</th>
+                        <th>Percentual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for candidato, votos in dados.resultados %}
+                    <tr>
+                        <td>{{ candidato.nome }}</td>
+                        <td>{{ votos }}</td>
+                        <td>{{ votos / dados.total_votos * 100 if dados.total_votos > 0 else 0 }}%</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endfor %}
+
+    <p>Total de votos no sistema: <strong>{{ total_votos }}</strong></p>
+
+    <div class="mt-5">
+        <h2>Assinaturas:</h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Leila</td>
+                <td>Fabiano</td>
+                <td>Clóvis</td>
+                <td>Valéria</td>
+              </tr>
+              <tr>
+                <th>Diretora</th>
+                <th>Membro da Comissão Eleitoral</th>
+                <th>Membro da Comissão Eleitoral</th>
+                <th>Membro da Comissão Eleitoral</th>
+              </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
